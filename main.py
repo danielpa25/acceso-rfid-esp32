@@ -1,13 +1,12 @@
-from machine import Pin
-from time import sleep
+import mfrc522
+import time
 
-led = Pin(12, Pin.OUT)
-led1 = Pin(2, Pin.OUT)
+mfrc522.inicializar_mfrc522()
+time.sleep(0.1)
 
 while True:
-    led.value(1)
-    led1.value(0)
-    sleep(0.25)
-    led.value(0)
-    led1.value(1)
-    sleep(0.25)
+    if mfrc522.detectar_tarjeta():
+        uid = mfrc522.leer_uid()
+        if uid:
+            print("UID detectado:", mfrc522.uid_a_texto(uid))
+    time.sleep(0.3)
